@@ -1,1 +1,66 @@
-<script>location.href='http://richjenks.com';</script>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Rich Jenks</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			@import url(http://fonts.googleapis.com/css?family=Lato);
+			* {
+				box-sizing: border-box;
+				margin: 0;
+			}
+			body {
+				font-family: Lato, sans-serif;
+				background: #e5e5e5;
+				color: #555;
+				padding: 1.6em;
+			}
+			.wrapper {
+				background: white;
+				max-width: 40em;
+				margin: auto;
+				padding: 1.6em;
+				border-radius: .3em;
+				border: 1px solid #ccc;
+				box-shadow: 0 2px 2px rgba(0,0,0,.1);
+			}
+			h1,
+			div {
+				margin-bottom: 1em;
+			}
+			a {
+				color: #555;
+				text-decoration: none;
+			}
+			a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrapper">
+			<h1><a href="https://github.com/richjenks">Rich Jenks</a></h1>
+			<div id="repos"></div>
+		</div>
+		<script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
+		<script>
+			var user = "richjenks";
+			$.ajax({
+				type: "GET",
+				url: "https://api.github.com/users/"+user+"/repos",
+				dataType: "json",
+				success: function(result) {
+					for( i in result ) {
+						$("#repos").append(
+							"<div><h2><a href='" + result[i].html_url + "' target='_blank'>" +
+							result[i].name + "</a></h2><p>" + result[i].description + "</p></div>"
+						);
+						console.log("i: " + i);
+					}
+					console.log(result);
+				}
+			});
+		</script>
+	</body>
+</html>
